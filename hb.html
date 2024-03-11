@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hummingbird</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      padding: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .container {
+      position: relative;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-bar {
+      position: absolute;
+      bottom: 85px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 20px;
+      width: 400px;
+      height: 50px;
+      border: 2px solid slategrey;
+      border-radius: 7px;
+      background: linear-gradient(to right, #31affd 20%, #0288db 40%, #0275bd 55%, #004570 70%, #002d49 90%, #fff 100%); /* Gradient for the first half */
+      background-color: #cbe9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .container img {
+      width: 70px;
+      height: auto;
+      animation: pulsate 2s infinite;
+    }
+
+    .title {
+      font-size: 36px;
+      color: white;
+      margin-bottom: 10px; 
+    }
+
+    .subtitle {
+      color: red;
+      font-style: italic;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .anothersubtitle {
+      color: rgb(255, 255, 255);
+      font-style: italic;
+      font-size: 14px;
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+
+    @keyframes pulsate {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .error-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 0, 0, 0.5);
+      z-index: 9999;
+      animation: error-pulsate 0.5s infinite alternate;
+    }
+
+    @keyframes error-pulsate {
+      0% {
+        opacity: 0.3;
+      }
+      50% {
+        opacity: 1;
+      }
+      70% {
+        opacity: 0.3;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="title">Hummingbird Beta Testing 2.3</div>
+  <div class="subtitle">Crash Test (Do not Turn Touch)</div> 
+  <div class="container" id="container">
+    <img src="images/logo.png" alt="Logo">
+    <div class="half"></div>
+    <div class="half"></div>
+  </div>
+  <div class="anothersubtitle">Referencing  to [ localhost://hummingbird:3000 ]</div>
+  <div class="loading-bar" id="loading-bar">88%</div>
+  <script>
+    document.getElementById('container').addEventListener('click', showErrorAnimation);
+    document.getElementById('loading-bar').addEventListener('click', showErrorAnimation);
+
+    function showErrorAnimation() {
+      const errorAnimation = document.createElement('div');
+      errorAnimation.classList.add('error-animation');
+      document.body.appendChild(errorAnimation);
+      setTimeout(() => {
+        errorAnimation.remove();
+      }, 500);
+    }
+
+    function animateLoadingBar() {
+      const loadingBar = document.getElementById('loading-bar');
+      let percent = 88.0;
+      const interval = setInterval(() => {
+        percent += 0.1;
+        loadingBar.textContent = percent.toFixed(1) + "%";
+        if (percent >= 100) {
+          clearInterval(interval);
+        }
+      }, 4000); 
+    }
+
+    animateLoadingBar();
+  </script>
+</body>
+</html>
